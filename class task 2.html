@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Age Verification</title>
+</head>
+<body>
+    <h1>Age Verification</h1>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required><br><br>
+        <input type="button" value="Submit" onclick="verifyAge()">
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        function verifyAge() {
+            var name = document.getElementById("name").value;
+            var age = parseInt(document.getElementById("age").value);
+
+            var messageElement = document.getElementById("message");
+
+            if (isNaN(age)) {
+                messageElement.innerHTML = "Please enter a valid age.";
+            } else if (age < 18) {
+                messageElement.innerHTML = "Hello " + name + ", you are not authorized to visit the site.";
+            } else {
+                messageElement.innerHTML = "Welcome " + name + " to this site.";
+            }
+        }
+    </script>
+</body>
+</html>

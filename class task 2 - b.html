@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <style>
+        #logout-button {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <form id="name-form">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="welcome-message"></div>
+
+    <button id="logout-button" style="display: none;">Logout</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameForm = document.getElementById('name-form');
+            const nameInput = document.getElementById('name');
+            const welcomeMessage = document.getElementById('welcome-message');
+            const logoutButton = document.getElementById('logout-button');
+
+            nameForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const name = nameInput.value;
+                const startTime = new Date().toLocaleString();
+
+                localStorage.setItem('name', name);
+                localStorage.setItem('startTime', startTime);
+
+                welcomeMessage.innerHTML = `Hello ${name}, you started at ${startTime}`;
+                logoutButton.style.display = 'block';
+
+                nameForm.style.display = 'none';
+            });
+
+            logoutButton.addEventListener('click', function () {
+                const name = localStorage.getItem('name');
+                const startTime = new Date(localStorage.getItem('startTime'));
+                const endTime = new Date();
+                const duration = endTime - startTime;
+
+                const hours = Math.floor(duration / 3600000);
+                const minutes = Math.floor((duration % 3600000) / 60000);
+                const seconds = Math.floor((duration % 60000) / 1000);
+
+                const durationMessage = `Thank You ${name}! You used the site for ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+
+                welcomeMessage.innerHTML = durationMessage;
+                logoutButton.style.display = 'none';
+
+                localStorage.clear();
+                nameForm.style.display = 'block';
+            });
+
+            const storedName = localStorage.getItem('name');
+            if (storedName) {
+                const startTime = localStorage.getItem('startTime');
+                welcomeMessage.innerHTML = `Hello ${storedName}, you started at ${startTime}`;
+                logoutButton.style.display = 'block';
+                nameForm.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country and State Dropdown</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <label for="country">Select a Country:</label>
+  <select id="country">
+    <option value="">Select Country</option>
+    <option value="usa">USA</option>
+    <option value="canada">Canada</option>
+    </select>
+
+  <label for="state">States:</label>
+  <select id="state">
+    </select>
+
+  <script>
+    $(document).ready(function() {
+      $('#country').change(function() {
+        var selectedCountry = $(this).val();
+        $.ajax({
+          type: "POST",
+          url: "get_states.php", 
+          data: { country: selectedCountry },
+          success: function(response) {
+            $("#state").html(response);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
